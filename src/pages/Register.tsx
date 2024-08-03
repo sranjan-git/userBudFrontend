@@ -23,7 +23,6 @@ const Register: React.FC = () => {
       setError("Invalid email format");
       return;
     }
-    console.log("Form submitted:", { name, email, password });
 
     
     try {
