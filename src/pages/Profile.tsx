@@ -10,16 +10,19 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        const token = localStorage.getItem("token");
+        if (!token) throw new Error("No token found");
+
         const response = await api.get("/users/profile", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         setName(response.data.name);
         setEmail(response.data.email);
         setBio(response.data.bio);
-      } catch (error) {
-        setError("Error fetching profile");
+      } catch (error: any) {
+        setError(error.message || "Error fetching profile");
       }
     };
 
@@ -29,19 +32,22 @@ const Profile: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("No token found");
+
       await api.put(
         "/users/profile/edit",
         { name, bio },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       alert("Profile updated successfully");
       setError("");
-    } catch (error) {
-      setError("Error updating profile");
+    } catch (error: any) {
+      setError(error.message || "Error updating profile");
     }
   };
 
