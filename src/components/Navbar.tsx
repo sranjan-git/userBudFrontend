@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext"; // Import AuthContext
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useContext(AuthContext); // Use AuthContext
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout(); // Use the logout function from AuthContext
     navigate("/login");
   };
 
@@ -18,7 +20,7 @@ const NavBar: React.FC = () => {
     <nav className="bg-gray-800 p-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <div>
-          <Link to="/Home" className="text-white text-xl font-bold">
+          <Link to="/home" className="text-white text-xl font-bold">
             userBuddy.
           </Link>
         </div>
@@ -52,50 +54,67 @@ const NavBar: React.FC = () => {
           <ul className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
             <li>
               <Link
-                to="/Home"
+                to="/home"
                 className="block text-white hover:text-gray-400 transition duration-200"
                 onClick={() => setIsOpen(false)}
               >
                 Home
               </Link>
             </li>
-            <li>
-              <Link
-                to="/profile"
-                className="block text-white hover:text-gray-400 transition duration-200"
-                onClick={() => setIsOpen(false)}
-              >
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/directory"
-                className="block text-white hover:text-gray-400 transition duration-200"
-                onClick={() => setIsOpen(false)}
-              >
-                Directory
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/register"
-                className="block text-white hover:text-gray-400 transition duration-200"
-                onClick={() => setIsOpen(false)}
-              >
-                Register
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/login"
-                className="block text-white hover:text-gray-400 transition duration-200"
-                onClick={() => setIsOpen(false)}
-              >
-                Login
-              </Link>
-            </li>
+            {isAuthenticated ? (
+              <>
+                <li>
+                  <Link
+                    to="/profile"
+                    className="block text-white hover:text-gray-400 transition duration-200"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/directory"
+                    className="block text-white hover:text-gray-400 transition duration-200"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Directory
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="block text-white hover:text-gray-400 transition duration-200"
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link
+                    to="/register"
+                    className="block text-white hover:text-gray-400 transition duration-200"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Register
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/login"
+                    className="block text-white hover:text-gray-400 transition duration-200"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Login
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
