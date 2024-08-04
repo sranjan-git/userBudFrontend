@@ -89,7 +89,6 @@ const Directory: React.FC = () => {
           <h3 className="text-xl text-center font-bold mb-4">User Information</h3>
           <p className="font-bold text-lg">{result.name}</p>
           <p className="text-sm text-gray-600">{result.email}</p>
-          <p className="text-sm text-gray-600">{result.bio}</p>
           <p className="text-sm">{result.bio}</p>
         </div>
       )}
