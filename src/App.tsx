@@ -9,6 +9,8 @@ import NavBar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 
+
+
 const App: React.FC = () => {
   return (
     <Router>
