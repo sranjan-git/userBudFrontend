@@ -13,7 +13,7 @@ const Profile: React.FC = () => {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("No token found");
 
-        const response = await api.get("/users/profile", {
+        const response = await api.get("/api/users/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -36,7 +36,7 @@ const Profile: React.FC = () => {
       if (!token) throw new Error("No token found");
 
       await api.put(
-        "/users/profile/edit",
+        "/api/users/profile/edit",
         { name, bio },
         {
           headers: {
