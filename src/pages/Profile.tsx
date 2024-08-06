@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 const Profile: React.FC = () => {
@@ -6,6 +7,7 @@ const Profile: React.FC = () => {
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -46,6 +48,7 @@ const Profile: React.FC = () => {
       );
       alert("Profile updated successfully");
       setError("");
+      navigate("/home");
     } catch (error: any) {
       setError(error.message || "Error updating profile");
     }
